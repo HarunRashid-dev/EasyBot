@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
@@ -69,8 +70,8 @@ fun MessageInput(onMessageSend : (String)-> Unit){
             message = ""
         }) {
             Icon(
-                imageVector = Icons.Default.Done,
-                contentDescription = "Done"
+                imageVector = Icons.Default.Send,
+                contentDescription = "Send"
             )
         }
     }
@@ -80,7 +81,7 @@ fun MessageInput(onMessageSend : (String)-> Unit){
 fun AppHeader(){
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
     ){
      Text(
