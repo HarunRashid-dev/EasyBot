@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Send
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.w3c.dom.Text
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import np.com.bimalkafle.easybot.ChatViewModel
 
 
@@ -39,11 +42,24 @@ fun ChatPage(modifier: Modifier = Modifier,viewModel: ChatViewModel){
         modifier = modifier
     ){
         AppHeader()
+        MessageList(modifier = Modifier.weight(1f),messageList = viewModel.messageList)
         MessageInput(
             onMessageSend = {
                 viewModel.sendMessage(it)
             }
         )
+    }
+}
+
+@Composable
+fun MessageList(modifier: Modifier = Modifier,messageList : List<MessageModel>){
+    LazyColumn (
+        modifier = Modifier,
+        reverseLayout = true
+    ){
+        items(messageList.reversed()){
+            Text(text = it.message)
+        }
     }
 }
 
