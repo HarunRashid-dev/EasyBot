@@ -4,12 +4,14 @@ import android.graphics.drawable.Icon
 import android.os.Message
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,9 +37,11 @@ import androidx.compose.ui.unit.sp
 import org.w3c.dom.Text
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.ViewModel
 import np.com.bimalkafle.easybot.ChatViewModel
+import np.com.bimalkafle.easybot.R
 
 
 @Composable
@@ -57,15 +61,32 @@ fun ChatPage(modifier: Modifier = Modifier,viewModel: ChatViewModel){
 
 @Composable
 fun MessageList(modifier: Modifier = Modifier,messageList : List<MessageModel>){
-    LazyColumn (
-        modifier = Modifier,
-        reverseLayout = true
-    ){
-        items(messageList.reversed()){
-            MessageRow(messageModel= it)
+    if(messageList.isEmpty()){
+        Column(
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) { Icon(
+            modifier = Modifier.size(60.dp),
+            painter = painterResource(id = R.drawable.baseline_question_answer_24),
+            contentDescription = "Icon",
+            tint = Purple80,
+            )
+            Text(text = "CaratLane IT Support")
+        }
+    }else{
+        LazyColumn (
+            modifier = Modifier,
+            reverseLayout = true
+        ){
+            items(messageList.reversed()){
+                MessageRow(messageModel= it)
 
+            }
         }
     }
+
+
 }
 
 @Composable
@@ -124,8 +145,10 @@ fun MessageInput(onMessageSend : (String)-> Unit){
         }
         )
         IconButton(onClick = {
-            onMessageSend(message)
-            message = ""
+            if(message.isNotEmpty()){
+                onMessageSend(message)
+                message = ""
+            }
         }) {
             Icon(
                 imageVector = Icons.Default.Send,
