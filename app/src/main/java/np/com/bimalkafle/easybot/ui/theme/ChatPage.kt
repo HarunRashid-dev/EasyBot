@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -85,13 +86,13 @@ fun MessageList(modifier: Modifier = Modifier,messageList : List<MessageModel>){
             Text(text = "CaratLane IT Support")
         }
     }else{
-        LazyColumn (
-            modifier = Modifier,
-            reverseLayout = true
-        ){
-            items(messageList.reversed()){
-                MessageRow(messageModel= it)
-
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            reverseLayout = true,
+            contentPadding = PaddingValues(top = 16.dp, bottom = 70.dp) // Adjust padding
+        ) {
+            items(messageList.reversed()) {
+                MessageRow(messageModel = it)
             }
         }
     }
