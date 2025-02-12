@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,19 +47,27 @@ import np.com.bimalkafle.easybot.R
 
 
 @Composable
-fun ChatPage(modifier: Modifier = Modifier,viewModel: ChatViewModel){
-    Column (
-        modifier = modifier
-    ){
-        AppHeader()
-        MessageList(modifier = Modifier.weight(1f),messageList = viewModel.messageList)
-        MessageInput(
-            onMessageSend = {
-                viewModel.sendMessage(it)
-            }
-        )
+fun ChatPage(modifier: Modifier = Modifier, viewModel: ChatViewModel) {
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        bottomBar = {
+            MessageInput { viewModel.sendMessage(it) }
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            AppHeader()
+            MessageList(
+                modifier = Modifier.weight(1f),
+                messageList = viewModel.messageList
+            )
+        }
     }
 }
+
 
 @Composable
 fun MessageList(modifier: Modifier = Modifier,messageList : List<MessageModel>){
